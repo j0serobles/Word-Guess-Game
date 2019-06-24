@@ -56,14 +56,15 @@ function Game(theme)  {
           
           //Determines if the entered key has already been guessed.
           //We do this by checking that the entered
-          //key is not already a member of the hits[] array.
+          //key is not already a member of this.attemptedLetters[] array.
           //If the entered key is already there, do nothing. 
           
           if (!this.gameOver) {
-            if(!this.hits.includes(aCharacter)) {
+            if(!this.attemptedLetters.includes(aCharacter)) {
+              this.attemptedLetters.push(aCharacter); 
               hitPosition =  this.secretWord.toLowerCase().search(aCharacter);
               if (hitPosition != -1 ) {
-                // New Hit! Save it to the hits[] array.
+                // New Hit! Save it to the hits[] array
                 this.hits.push(aCharacter);
                 // Update the output character array.
                 this.buildSecretWordOutput();
@@ -71,7 +72,6 @@ function Game(theme)  {
                 if (this.checkComplete()) {
                   //User Won!
                   this.endTheGame();
-
                 }
               }
               else {
@@ -127,7 +127,7 @@ function Game(theme)  {
   // Checks if passed argument is alphanumeric, using a regular expression
   /////////////////////////////////////////////////////////////////////////
   this.alphanumeric = function(inputtxt)  {
-      var letterNumber = /^[0-9a-zA-Z]+$/;
+      var letterNumber = /^[0-9a-zA-Z]$/;
       if(inputtxt.match(letterNumber)) { 
         return true;
         }
@@ -146,47 +146,46 @@ function Game(theme)  {
         }
     }
   } // End of Game constructor
-  ///////////////////////////////////////////////////////////////////////
 
-  //Calls:
-  //Handler for key-press event
-  document.onkeyup = function(event) {
-
-    //Before the first key-press, the Game object is null.
-    //After the first key press is received, validate the Game is not created 
-    // and create the new Game object.
-    if (!currentGame) {
-      currentGame  = new Game(currentTheme) ; 
-    }
-    else {
-      //Game has been created after subsequent keys are received. 
-      if (currentGame.gameOver) {
-        //Process game loss
-        alert("Game Ended");
-      } else  {
-        //Remove the "Press any key ... message by applying a display-none class "
-        pageInstructions.classList.add("d-none"); 
-
-        currentGame.evaluateGuess(event.key);  
-        
-        if (!currentGame.attemptedLetters.includes(event.key)) {
-          currentGame.attemptedLetters.push(event.key); 
-        }
-
-        //Update the contents of the <p> tag showing the current word.
-        displayedWord.innerHTML = "";
-        for (var i = 0; i < currentGame.outputCharacters.length; i++) {
-          displayedWord.innerHTML += '<span class="border-bottom text-center mx-2">' +
-          (((typeof currentGame.outputCharacters[i]) === "undefined") ? "&nbsp;&nbsp" : currentGame.outputCharacters[i]) +
-          '</span>';
-        }
-        
-
-        //Update the letters already guessed.
-        guessedLetters.textContent = currentGame.attemptedLetters;
-
-        //Update the number of guesses remaining.
-        guessesRemaining.innerHTML = currentGame.remainingAttempts; 
-    }
+//////////////////////////////////////////////////////////////////////
+function playGame (event) {
+  //Game is after after any key is pressed. 
+  //Only evaluate alphanumeric keys
+  if (currentGame.alphanumeric(event.key)) {
+    currentGame.evaluateGuess(event.key);
+    updatePageElements();  
   }
-}// End of onkeyup handler
+} // End of playGame() function
+/////////////////////////////////////////////////////////////////////////////////////////////
+function startGame(){
+  document.addEventListener("keyup", playGame);
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+function updatePageElements() {       
+  
+  if (currentGame.gameOver) { 
+    pageInstructions.textContent = (currentGame.remainingAttempts === 0) ? "You Lost!" : "You Won!"; 
+  } else {
+    pageInstructions.textContent = "Game Started."; 
+  } 
+
+  //Update the contents of the <p> tag showing the current word.
+  displayedWord.innerHTML = "";
+  for (var i = 0; i < currentGame.outputCharacters.length; i++) {
+    displayedWord.innerHTML += '<span class="border-bottom text-center mx-2">' +
+    (((typeof currentGame.outputCharacters[i]) === "undefined") ? "&nbsp;&nbsp" : currentGame.outputCharacters[i]) +
+    '</span>';
+  }
+
+ //Update the letters already guessed.
+  guessedLetters.textContent   = currentGame.attemptedLetters;
+  guessesRemaining.textContent = currentGame.remainingAttempts;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+////When page is loaded, create and play the game.
+
+if (!currentGame) {
+  currentGame  = new Game(currentTheme) ; 
+} 
+//Register the handler to start playing the game at the first key-press received:
+document.addEventListener("keyup",startGame);
