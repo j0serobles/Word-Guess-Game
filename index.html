@@ -9,20 +9,69 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
         <meta name="description" content="">
+        <!-- Content Scaling -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <meta charset="utf-8">
+        <title></title>
+        <!-- 
+        <link rel="stylesheet" href="resets.css">
+        --> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
 
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <div class="container">
+            <!--[if lt IE 7]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+            <div class="row">
+                <div class="col-md-6 bg-primary">
+                  
+                    
+                </div>
+                
+                <div class="col-md-6 text-center">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p id="page_instructions"> Press Any key to get started!</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p> Wins: 0</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p> Current Word</p>
+                    </div>
+                  </div>    
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h5 id="displayed_word" class="text-center"> 
+                       <span class="border-bottom"></span>
+                      </h5>
+                    </div>
+                    <div class="col-md-12">
+                            <p> 
+                                Number of Guesses Remaining: <span id="guesses_remaining">0</span>
+                            </p>
+                    </div>
+                    <div class="col-md-12">
+                            <p> Letters Already Guessed: 
+                              <span id="guessedLetters"></span>
+                            </p>
+                    </div>
+                  </div>    
+    
+                </div>
 
-        <p> Go To The Console!</p>
-      
+            </div>
 
-        <script src="assets/javascript/game.js"></script>
-        <script src="" async defer></script>
-
+            <script src="assets/javascript/game.js"></script>
+            <script src="" async defer></script>
+        </div>
       </body>
 </html>
