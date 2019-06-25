@@ -1,10 +1,11 @@
  ///////////////////////////////////////////////////////////////////////////
  // global variables
  ///////////////////////////////////////////////////////////////////////////
- var displayedWord   = document.getElementById("displayed_word"); 
- var guessedLetters  = document.getElementById("guessedLetters"); 
+ var displayedWord    = document.getElementById("displayed_word"); 
+ var guessedLetters   = document.getElementById("guessedLetters"); 
  var guessesRemaining = document.getElementById("guesses_remaining");  
  var pageInstructions = document.getElementById("page_instructions");
+ var currentThemeElement     = document.getElementById("current_theme_name");
  var gamesPlayed    = 0;  // How many games have been played
  var wins           = 0;  // How many wins
  var losses         = 0;  // How many losses
@@ -158,7 +159,9 @@ function playGame (event) {
 } // End of playGame() function
 /////////////////////////////////////////////////////////////////////////////////////////////
 function startGame(){
+  //When the first key is input, change the keyup listener to call playGame each time.
   document.addEventListener("keyup", playGame);
+  updatePageElements();  
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 function updatePageElements() {       
@@ -168,6 +171,8 @@ function updatePageElements() {
   } else {
     pageInstructions.textContent = "Game Started."; 
   } 
+
+  currentThemeElement.textContent = "Current Theme: " +  currentGame.currentTheme.themeName; 
 
   //Update the contents of the <p> tag showing the current word.
   displayedWord.innerHTML = "";
@@ -182,10 +187,11 @@ function updatePageElements() {
   guessesRemaining.textContent = currentGame.remainingAttempts;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
-////When page is loaded, create and play the game.
+// When page is loaded, create the game and wait for a key input.
 
 if (!currentGame) {
   currentGame  = new Game(currentTheme) ; 
 } 
 //Register the handler to start playing the game at the first key-press received:
 document.addEventListener("keyup",startGame);
+document.addEventListener("load", startGame); 
