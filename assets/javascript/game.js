@@ -106,7 +106,12 @@ function Game(theme) {
   /////////////////////////
   // Methods:
   /////////////////////////
-  /////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////
+  // playGame gets called every time a key is typed.
+  // It will reset the game if it has finished, or will accept the 
+  // next input if the game is still active
+  /////////////////////////////////////////////////////////////////////////////
   this.playGame = function(key) {
  
     if (this.gameOver) {
@@ -123,29 +128,11 @@ function Game(theme) {
     userInterface.updatePageElements(); 
     console.log("Wins: "+ this.wins + ". Losses = " + this.losses); 
   } 
-  // /////////////////////////////////////////////////////////////////////////////////////////////
-  // this.startGame = function() {
-  //     //After the first key is input, change the keyup listener to call playGame() each time.
-  //     document.addEventListener("keyup", function() {
-  //                                          this.playGame();
-  //                                        }
-  //                              );
-  //     userInterface.updatePageElements();  
-  // }
-  /////////////////////////////////////////////////////////////////////////////////////////////
-  // this.playGame = function(event) {
-  //   //Game is started after any key is pressed. 
-  //   //Only accept alphanumeric keys
-  //   if (this.alphanumeric(event.key)) {
-  //     this.evaluateGuess(event.key);
-  //     userInterface.updatePageElements();  
-  //   }
-  // } 
   //////////////////////////////////////////////////////
-  // This is the most important method.
+  // evaluateGuess: This is the most important method.
   // It gets called whenever a key is typed.
   // It determines if the entered key is a hit or miss,
-  // And updates everything else accordingly. 
+  // And updates the game state accordingly. 
   //////////////////////////////////////////////////////
   this.evaluateGuess = function(aCharacter) {
       
