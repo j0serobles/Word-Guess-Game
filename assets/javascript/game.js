@@ -38,6 +38,9 @@ function UI() {
   this.winCount            = document.getElementById("win_count");
   this.lostCount           = document.getElementById("lost_count");
 
+  this.wrongGuess          = document.getElementById("wrong"); 
+  this.correctGuess          = document.getElementById("ding"); 
+
   ////////////////////////////////
   // Methods
   ////////////////////////////////
@@ -155,6 +158,8 @@ function Game(theme) {
       this.attemptedLetters.push(aCharacter); 
       hitPosition =  this.secretWord.toLowerCase().search(aCharacter);
       if (hitPosition != -1 ) {
+        // Play sound
+        userInterface.correctGuess.play();
         // New Hit! Save it to the hits[] array
         this.hits.push(aCharacter);
         // Update the output character array.
@@ -174,6 +179,7 @@ function Game(theme) {
             this.endTheGame(); 
         } else {
           //Play buzzer?
+          userInterface.wrongGuess.play(); 
           this.misses++;
           this.buildSecretWordOutput();
         }
