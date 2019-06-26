@@ -20,15 +20,15 @@ This version of Word-Guess-Game uses a single theme: 80's Pop Music Artists. The
 
 ### Access
 The [game](https://j0serobles.github.io/Word-Guess-Game/) can be accessed at https://j0serobles.github.io/Word-Guess-Game/
-The github [repo](https://github.com/j0serobles/Bootstrap-Portfolio) is at https://github.com/j0serobles/Bootstrap-Portfolio
+The github [repo](https://github.com/j0serobles/Word-Guess-Game/) is at https://github.com/j0serobles/Bootstrap-Portfolio
 
 ### Design
 The Javascript program is divided in three sections:
-1.GLOBALS: Contains the global variables used.
-2.OBJECTS: Contains the source code for two object constructors:
+1. GLOBALS: Contains the global variables used.
+2. OBJECTS: Contains the source code for two object constructors:
  * UI (User Interface)
  * Game (The actual game)
-3.CALLS: Contains the call to add an event listener in the document object that will execute the Game.playGame() method - Where everything starts. 
+3. CALLS: Contains the call to add an event listener in the document object that will execute the Game.playGame() method - Where everything starts. 
 
 The game goes through the following steps when played:
 1. Render the initial HTML page (load)
