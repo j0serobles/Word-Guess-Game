@@ -24,11 +24,11 @@ The github [repo](https://github.com/j0serobles/Bootstrap-Portfolio) is at https
 
 ### Design
 The Javascript program is divided in three sections:
-GLOBALS: Contains the global variables used.
-OBJECTS: Contains the source code for two object constructors:
+1.GLOBALS: Contains the global variables used.
+2.OBJECTS: Contains the source code for two object constructors:
  * UI (User Interface)
  * Game (The actual game)
-CALLS: Contains the call to add an event listener in the document object that will execute the Game.playGame() method - Where everything starts. 
+3.CALLS: Contains the call to add an event listener in the document object that will execute the Game.playGame() method - Where everything starts. 
 
 The game goes through the following steps when played:
 1. Render the initial HTML page (load)
@@ -39,4 +39,4 @@ All characters ever attempted (either hit or miss) are stored into another array
 5. Steps 3 and 4 are repeated until :
 	* The number of attempts remaining goes to zero : The game is lost.
 	* All the letters are guessed before the number of attempts goes to zero: The game is won.
-6. When the game completes, the User Interface object is called to update the HTML page once again and wait for the next key to be typed in, which restarts the game at step 1.
+6. When the game completes, the User Interface object is called to update the HTML page once again and wait for the next key to be typed in, which restarts the game at step two.
