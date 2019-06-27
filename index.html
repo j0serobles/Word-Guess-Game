@@ -26,83 +26,75 @@
         <audio id="wrong">
             <source src="assets/media/wrong.wav" type="audio/wav">
             Your browser does not support the audio element.
-          </audio>
-          <audio id="ding">
+        </audio>
+        <audio id="ding">
               <source src="assets/media/ding.wav" type="audio/wav">
               Your browser does not support the audio element.
-            </audio>
+        </audio>
+        <audio id="tada">
+                <source src="assets/media/tada.wav" type="audio/wav">
+                Your browser does not support the audio element.
+        </audio>
+        <audio id="lost">
+            <source src="assets/media/lost.wav" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+  
 
 
         <div class="container">
-          <div class="header">
-            <img src="assets/images/80s.jpg" alt="I love the 80s!">
+
+          <div class="header pb-5">
+            <img class="mt-2 mx-auto d-block" src="assets/images/80s.jpg" alt="I love the 80s!">
           </div>
 
-            <!--[if lt IE 7]>
-                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-            <![endif]-->
+          <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+          <![endif]-->
 
             <div class="row">
-
-                <div class="col-md-6"> 
-                </div>
-                
-                <div class="col-md-6 text-center">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p id="page_instructions"> Press Any key to get started!</p>
-                    </div>
+              <div class="col-md-6"> 
+                <img class="m-3 float-left" src="assets/images/80s2.png" alt="I log the 80s!"> 
+                <p id="entry_text" class="p-0 m-0" >
+                    The 1980s saw the emergence of dance music and new wave. As disco fell out of fashion in the decade's 
+                    early years, genres such as post-disco, Italo disco, Euro disco and dance-pop became more popular. 
+                    Rock music continued to enjoy a wide audience. Soft rock, glam metal, thrash metal, shred guitar
+                     characterized by heavy distortion, pinch harmonics and whammy bar abuse became very popular.
+                      Adult contemporary, quiet storm, and smooth jazz gained popularity. In the late 1980s, glam metal 
+                      became the largest, most commercially successful brand of music in the United States and worldwide.
+                </p>
+              </div>
+              <div class="col-md-6 text-center">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p id="page_instructions"> Press Any key to get started!</p> 
+                    <p id="current_theme_name"> Current Theme: </p> 
+                    <p> Current Word :</p>
+                    <h5 id="displayed_word" class="text-center"> 
+                      <span class="border-bottom"></span>
+                    </h5>
+                    <p> 
+                      Number of Guesses Remaining: <span id="guesses_remaining">0</span>
+                    </p>    
+                    <p> Letters Already Guessed: [
+                        <span id="guessedLetters"></span>
+                        <span>]</span>
+                    </p> 
+                    <p> Win: 
+                        <span id="win_count"></span>
+                    </p>
+                    <p> Loose:
+                        <span id="lost_count"></span>
+                    </p>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p id="current_theme_name"> Current Theme: </p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p> Current Word :</p>
-                    </div>
-                  </div>    
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h5 id="displayed_word" class="text-center"> 
-                       <span class="border-bottom"></span>
-                      </h5>
-                    </div>
-                    <div class="col-md-12">
-                            <p> 
-                                Number of Guesses Remaining: <span id="guesses_remaining">0</span>
-                            </p>
-                    </div>
-                    <div class="col-md-12">
-                            <p> Letters Already Guessed: [
-                              <span id="guessedLetters"></span>
-                              <span>]</span>
-                            </p>
-                    </div>
-                    <div class="col-md-12">
-                        <p> Win: 
-                            <span id="win_count"></span>
-                        </p>
-                    </div>
-                    <div class="col-md-12">
-                        <p> Loose:
-                            <span id="lost_count"></span>
-                        </p>
-                    </div>
-                  </div>    
-    
                 </div>
-
-
-
-            </div>
+              </div>
+          </div>
 
             <script src="assets/javascript/game.js"></script>
             <script src="" async defer></script>
+
         </div>
-
-
 
       </body>
 </html>

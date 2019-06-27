@@ -38,8 +38,10 @@ function UI() {
   this.winCount            = document.getElementById("win_count");
   this.lostCount           = document.getElementById("lost_count");
 
-  this.wrongGuess          = document.getElementById("wrong"); 
+  this.wrongGuess            = document.getElementById("wrong"); 
   this.correctGuess          = document.getElementById("ding"); 
+  this.tada                  = document.getElementById("tada"); 
+  this.lost                  = document.getElementById("lost"); 
 
   ////////////////////////////////
   // Methods
@@ -234,9 +236,11 @@ function Game(theme) {
       }
       if (this.remainingAttempts === 0 ) {
         this.losses++;
+        userInterface.lost.play();
       }
       else {
         this.wins++;
+        userInterface.tada.play();
       }
 
       this.gamesPlayed++;
@@ -272,14 +276,5 @@ function Game(theme) {
  document.addEventListener ("keyup", event => { 
    currentGame.playGame(event.key);
    }); 
-
-
-// //Register the handler to start playing the game at the first key-press received:
-// document.addEventListener("keyup", startGame);
-
-// function startGame(event) {
-//   //After the first key is input, change the keyup listener to call playGame() each time.
-//   document.onkeyup = currentGame.playGame(event); 
-// }
 
 
