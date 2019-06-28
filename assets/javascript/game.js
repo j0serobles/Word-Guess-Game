@@ -1,29 +1,16 @@
  // GLOBALS:global variables
-// TODO: Implement multiple, user-selectable themes
-
-// For the mutli-themed functionality, create an array of theme objects.
-// This version uses only one theme. 
-
-var themes = [
-  
-    theme1 = {
-      themeName    : 'Eighties Pop Music Artists',
-      imageFileName: "80smusic.jpg",  
-      themeWords   : [ 'A-Ha', 'Cyndi Lauper', 'Bon-Jovi', 'R.E.M', 'Bruce Springsteen' , 'Journey', 'Ramones' , 'PinkFloyd', 'Duran-Duran', 'Madonna', 'Van Halen', 'Michael Jackson', 'Yes', 'Ozzy Osbourne', 'Metallica']
-    },
-
-    theme2 = {
-      themeName    : 'American Cities',
-      imagefileName: 'americancities.jpg',
-      themeWords   : ['New York', 'Los Angeles' , 'San Francisco', 'Houston', 'Miami', 'Orlando', 'Seattle', 'Detroit', 'Fargo', 'Chicago']
-    }
-]
 
 //Force the current theme
+//TODO: Implement user-selectable themes.
+
 var currentTheme = themes[0];
 
 ///////////////////////////////////////////////////////////////////////////
 // Constructor for UI object
+// The UI object has all the attributes and methods
+// for handling the HTML page. 
+// It is used by the Game() object whenever the HTML elements
+// need to be updated. 
 ///////////////////////////////////////////////////////////////////////////
 function UI() { 
 
@@ -48,9 +35,16 @@ function UI() {
   ////////////////////////////////
  
   this.updatePageElements = function() {
-    
+  
+    document.getElementById("secretImage").setAttribute("src", "assets/images/80s.jpg");
+    document.getElementById("secretImage").setAttribute("alt", "currentGame.currentTheme.themeName");
+    document.getElementById("entry_text").innerHTML = "The 1980s saw the emergence of dance music and new wave. As disco fell out of fashion in the decade's early years, genres such as post-disco, Italo disco, Euro disco and dance-pop became more popular. Rock music continued to enjoy a wide audience.     Soft rock, glam metal, thrash metal, shred guitar characterized by heavy distortion, pinch harmonics and whammy bar abuse became very popular.  Adult contemporary, quiet storm, and smooth jazz gained popularity.     In the late 1980s, glam metal became the largest, most commercially successful brand of music in the United States and worldwide.";
+
     if (currentGame.gameOver) { 
       this.pageInstructions.textContent = (currentGame.remainingAttempts === 0) ? "You Lost!" : "You Won!"; 
+      document.getElementById("secretImage").setAttribute("src", currentGame.secretImage);
+      document.getElementById("secretImage").setAttribute("alt", currentGame.secretWord);
+      document.getElementById("entry_text").innerHTML = currentGame.secretText;
     } else {
       this.pageInstructions.textContent = "Game Started."; 
     }
@@ -77,7 +71,14 @@ function UI() {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Constructor for Game object
+// Constructor for Game object.
+// The Game() object has the attributes and methods needed
+// for playing the Word-Guess game.  Its constructor gets passed a 
+// theme[] global array.
+// (This version only uses one theme)
+// Pressing any key starts the game and subsequent key presses call the
+// playGame() function to match the entered key to a letter in the secret
+// word selected by the computer randomly. 
 ///////////////////////////////////////////////////////////////////////////
 function Game(theme) {
 
@@ -86,8 +87,21 @@ function Game(theme) {
   /////////////////////////
 
   this.currentTheme = theme;
-  // Get a word from current theme's array, randomly. 
-  this.secretWord = theme.themeWords[Math.floor(Math.random() * theme.themeWords.length)];
+  // Get a themeWords object from current theme's array of objects
+  // First, compute the index randomly (must be > 0 since the first element is 
+  // for the default page shown before the game starts)
+  this.themeWordIndex = 0;
+  do {
+     this.themeWordIndex = Math.floor(Math.random() * theme.themeWords.length);
+  } 
+  while (this.themeWordIndex === 0);
+
+  //The "name" attribute in the themeWords object is the secret word.
+  this.secretWord = theme.themeWords[this.themeWordIndex].name;
+  //The image to display at the end of the game
+  this.secretImage = theme.themeWords[this.themeWordIndex].imageFile;
+  //The text to display besides the secretImage
+  this.secretText = theme.themeWords[this.themeWordIndex].textInfo;
   //Stores each of the letters guessed correctly.
   this.hits   = [];
   //Stores the letters input by the user (either hit or miss
@@ -128,7 +142,6 @@ function Game(theme) {
         }
     }
     userInterface.updatePageElements(); 
-    console.log("Wins: "+ this.wins + ". Losses = " + this.losses); 
   } 
   //////////////////////////////////////////////////////
   // evaluateGuess: This is the most important method.
@@ -191,13 +204,13 @@ function Game(theme) {
     return true;
   }
 
-  ///////////////////////////////////////////////////
-
-  // This function updates the character array to show in the
+  ///////////////////////////////////////////////////////////////////////////////////
+  // buildSecretWordOutput()  updates the character array to be shown in the
   // page with the progress of the user's guesses (outputCharacters[]).
   // For every character in the actual secret word, place it in outputCharacters[]
   // if it has been guessed correctly (it exists in the hits[] array).
   // If it is boilerplate text ("-", " ", "/", etc.), write it directly.
+  ///////////////////////////////////////////////////////////////////////////////////
   this.buildSecretWordOutput = function() {
     for (var i = 0; i < this.secretWord.length; i++) {
       
@@ -227,7 +240,7 @@ function Game(theme) {
   }
   //////////////////////////////////////////////////////////////////////
   // endTheGame 
-  // Ends the game, reveals secretWord
+  // Ends the game, set state variable to later reveal secret word.
   /////////////////////////////////////////////////////////////////////
   this.endTheGame = function() {
     this.gameOver = true;
@@ -244,11 +257,34 @@ function Game(theme) {
       }
 
       this.gamesPlayed++;
-      // this.resetGame();
   }
 
+  /////////////////////////////////////////////////////////////////////
+  //Set page elements and Game() object attributes to a default state.
+  ////////////////////////////////////////////////////////////////////
   this.resetGame = function() { 
-    this.secretWord = theme.themeWords[Math.floor(Math.random() * theme.themeWords.length)];
+
+    // When game is reset, the page shows elements
+    // from the default object (theme.themeWords[0])
+    this.themeWordIndex = 0; // Element [0] in the array is the 'default' object 
+    this.secretWord = theme.themeWords[this.themeWordIndex].name;
+    this.secretImage = theme.themeWords[this.themeWordIndex].imageFile;
+    this.secretText = theme.themeWords[this.themeWordIndex].textInfo;
+    userInterface.updatePageElements();
+    
+    // Now get a non-default theme.themeWords[] object from current theme.
+    // First, compute the index randomly (must be > 0 since the first element is 
+    // for the default page shown when the game has started).
+    this.themeWordIndex = 0;
+    do {
+      this.themeWordIndex = Math.floor(Math.random() * theme.themeWords.length);
+    } 
+    while (this.themeWordIndex === 0);
+
+    this.secretWord = theme.themeWords[this.themeWordIndex].name;
+    this.secretImage = theme.themeWords[this.themeWordIndex].imageFile;
+    this.secretText = theme.themeWords[this.themeWordIndex].textInfo;
+
     this.hits.length = 0; 
     this.attemptedLetters.length = 0;
     this.misses =  0;
@@ -256,11 +292,7 @@ function Game(theme) {
     this.hitPosition = 0;
     this.outputCharacters = new Array (this.secretWord.length); 
     this.gameOver = false;
-    this.ignorekey = true;
-
-
-
-
+    
   }
 
 } // End of Game constructor
